@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ComposeBottomSheetDialog"
-include ':app'
+include ":app"

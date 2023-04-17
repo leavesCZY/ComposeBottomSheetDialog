@@ -1,15 +1,11 @@
 package github.leavesczy.composebottomsheetdialog
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -20,18 +16,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 
 /**
@@ -62,7 +56,7 @@ fun BottomSheetDialog(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color(0x99000000))
+                    .background(color = Color(color = 0x4D000000))
                     .clickableNoRipple {
                         if (canceledOnTouchOutside) {
                             onDismissRequest()
@@ -87,16 +81,16 @@ private fun BoxScope.InnerDialog(
     content: @Composable () -> Unit
 ) {
     var offsetY by remember {
-        mutableStateOf(0f)
+        mutableStateOf(value = 0f)
     }
     val offsetYAnimate by animateFloatAsState(targetValue = offsetY)
-    var bottomSheetHeight by remember { mutableStateOf(0f) }
+    var bottomSheetHeight by remember { mutableStateOf(value = 0f) }
     AnimatedVisibility(
         modifier = Modifier
+            .align(alignment = Alignment.BottomCenter)
             .clickableNoRipple {
 
             }
-            .align(alignment = Alignment.BottomCenter)
             .onGloballyPositioned {
                 bottomSheetHeight = it.size.height.toFloat()
             }
@@ -124,19 +118,32 @@ private fun BoxScope.InnerDialog(
         visible = visible,
         enter = slideInVertically(
             animationSpec = tween(durationMillis = 400, easing = LinearOutSlowInEasing),
-            initialOffsetY = { 2 * it }
+            initialOffsetY = {
+                2 * it
+            }
         ),
         exit = slideOutVertically(
             animationSpec = tween(durationMillis = 400, easing = LinearOutSlowInEasing),
-            targetOffsetY = { it }
-        ),
+            targetOffsetY = {
+                it
+            }
+        )
     ) {
         DisposableEffect(key1 = null) {
             onDispose {
                 offsetY = 0f
             }
         }
-        content()
+        Box(
+            modifier = Modifier.clip(
+                shape = RoundedCornerShape(
+                    topStart = 24.dp,
+                    topEnd = 24.dp
+                )
+            )
+        ) {
+            content()
+        }
     }
 }
 
@@ -144,7 +151,7 @@ private fun Modifier.clickableNoRipple(onClick: () -> Unit): Modifier =
     composed {
         clickable(
             indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick()
-        }
+            interactionSource = remember { MutableInteractionSource() },
+            onClick = onClick
+        )
     }

@@ -1,11 +1,15 @@
 package github.leavesczy.composebottomsheetdialog
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -17,7 +21,12 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -81,10 +90,10 @@ private fun BoxScope.InnerDialog(
     content: @Composable () -> Unit
 ) {
     var offsetY by remember {
-        mutableStateOf(value = 0f)
+        mutableFloatStateOf(value = 0f)
     }
-    val offsetYAnimate by animateFloatAsState(targetValue = offsetY)
-    var bottomSheetHeight by remember { mutableStateOf(value = 0f) }
+    val offsetYAnimate by animateFloatAsState(targetValue = offsetY, label = "")
+    var bottomSheetHeight by remember { mutableFloatStateOf(value = 0f) }
     AnimatedVisibility(
         modifier = Modifier
             .align(alignment = Alignment.BottomCenter)
@@ -150,8 +159,8 @@ private fun BoxScope.InnerDialog(
 private fun Modifier.clickableNoRipple(onClick: () -> Unit): Modifier =
     composed {
         clickable(
+            onClick = onClick,
             indication = null,
-            interactionSource = remember { MutableInteractionSource() },
-            onClick = onClick
+            interactionSource = remember { MutableInteractionSource() }
         )
     }

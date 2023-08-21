@@ -2,6 +2,6 @@
 
 Jetpack Compose BottomSheetDialog
 
-详情请看：[用 Jetpack Compose 写一个 BottomSheetDialog](https://juejin.cn/post/7151792921698631717)
+相关联的文章：[用 Jetpack Compose 写一个 BottomSheetDialog](https://juejin.cn/post/7151792921698631717)
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dc4beb4dae884a3793f5e8a036d23736~tplv-k3u1fbpfcp-zoom-1.image)
+![](https://github.com/leavesCZY/ComposeBottomSheetDialog/assets/30774063/011783da-35e2-4c76-92fe-8d91db25b36f)

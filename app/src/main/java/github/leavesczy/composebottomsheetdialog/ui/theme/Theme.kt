@@ -5,8 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -35,21 +33,6 @@ fun ComposeBottomSheetDialogTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(
-        color = Color.Transparent,
-        darkIcons = !darkTheme,
-        transformColorForLightContent = {
-            Color.Transparent
-        }
-    )
-    systemUiController.setNavigationBarColor(
-        color = Color.White,
-        darkIcons = !darkTheme,
-        transformColorForLightContent = {
-            Color.White
-        }
-    )
     val colorScheme = when {
         darkTheme -> DarkColorScheme
         else -> LightColorScheme

@@ -29,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -51,17 +50,17 @@ fun BottomSheetDialog(
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    BackHandler(enabled = visible, onBack = {
-        if (cancelable) {
-            onDismissRequest()
-        }
-    })
     Box(modifier = modifier) {
         AnimatedVisibility(
             visible = visible,
             enter = fadeIn(animationSpec = tween(durationMillis = 400, easing = LinearEasing)),
             exit = fadeOut(animationSpec = tween(durationMillis = 400, easing = LinearEasing))
         ) {
+            BackHandler(enabled = visible) {
+                if (cancelable) {
+                    onDismissRequest()
+                }
+            }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -156,11 +155,14 @@ private fun BoxScope.InnerDialog(
     }
 }
 
-private fun Modifier.clickableNoRipple(onClick: () -> Unit): Modifier =
-    composed {
-        clickable(
-            onClick = onClick,
+@Composable
+private fun Modifier.clickableNoRipple(onClick: () -> Unit): Modifier {
+    return then(
+        other = Modifier.clickable(
+            onClickLabel = null,
             indication = null,
-            interactionSource = remember { MutableInteractionSource() }
+            interactionSource = remember { MutableInteractionSource() },
+            onClick = onClick
         )
-    }
+    )
+}

@@ -1,4 +1,4 @@
-package github.leavesczy.composebottomsheetdialog
+package github.leavesczy.bottomsheetdialog
 
 import androidx.compose.runtime.Stable
 

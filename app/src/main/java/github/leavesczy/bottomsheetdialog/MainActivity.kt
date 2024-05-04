@@ -1,4 +1,4 @@
-package github.leavesczy.composebottomsheetdialog
+package github.leavesczy.bottomsheetdialog
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
-import github.leavesczy.composebottomsheetdialog.ui.theme.ComposeBottomSheetDialogTheme
 
 /**
  * @Author: leavesCZY
@@ -90,7 +89,7 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(fraction = 0.7f)
-                .background(color = Color(0xFF4DD0E1))
+                .background(color = Color(0xFFFFFFFF))
                 .navigationBarsPadding(),
             verticalArrangement = Arrangement.Center
         ) {

@@ -1,4 +1,4 @@
-package github.leavesczy.composebottomsheetdialog
+package github.leavesczy.bottomsheetdialog
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

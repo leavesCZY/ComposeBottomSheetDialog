@@ -1,4 +1,4 @@
-package github.leavesczy.composebottomsheetdialog
+package github.leavesczy.bottomsheetdialog
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
